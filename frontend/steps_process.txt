@@ -1,0 +1,23 @@
+To run your project locally using npm, follow these steps:
+
+1. Initialize npm (if not already done)
+Open a terminal in your project folder and run:
+npm init -y
+
+2. Install a Static Server
+Install a simple static server, such as serve:
+npm install -g serve
+or as a dev dependency:
+npm install --save-dev serve
+3. Serve Your public Folder
+Run this command from your project root:
+npx serve public
+or, if installed globally:
+serve public
+4. Open in Browser
+The terminal will show a local URL (e.g., http://localhost:3000). Open this in your browser to view your app.
+
+Note:
+If you want to remove Firebase, make sure to also remove all Firebase imports and related code from your main.js as previously discussed.
+If you use ES modules and import/export, serving over HTTP (not ) is required, which serve provides.
+Let me know if you need help with a specific step!

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Analyzer & Reporter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    </head>
+<body class="antialiased">
+
+    <!-- Infographic Page (Initial Landing) -->
+    <div id="infographicPage" style="background-color: #F0F9FF;">
+        <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="text-xl font-bold text-[#0C4A6E]">
+                    <span>🌿</span> Carbon Analyzer and Reporter
+                </div>
+                <div class="hidden md:flex space-x-8 infographic-header-nav">
+                    <a href="#" id="infographicLoginLink" class="text-gray-600 hover:text-[#0077B6] font-medium">
+                        Login
+                    </a>
+                </div>
+            </nav>
+        </header>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <!-- Header Section -->
+            <header class="text-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-[#0C4A6E]">Your Carbon Footprint: A Visual Guide for the UK</h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Based on the UK Government's 2025 Greenhouse Gas (GHG) Conversion Factors, this guide breaks down the key contributors to an individual's carbon footprint and highlights the most impactful ways to reduce it.</p>
+            </header>
+
+            <!-- Emission Scopes Explained Section -->
+            <section class="mb-20">                
+                <h3 class="text-lg font-semibold text-[#075985] mb-1 text-center">Understanding Your Emissions: The Three Scopes</h3>
+                <p class="text-sm text-gray-500 mb-8 text-center">To accurately measure a carbon footprint, emissions are categorized into three types. Here’s what they mean for you.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card text-center border-t-4 border-[#38BDF8]">
+                        <div class="text-4xl mb-4">🏠</div>
+                        <h3 class="text-xl font-bold text-[#075985] mb-2">Scope 1: Direct Emissions</h3>
+                        <p class="text-gray-600">These are emissions from sources you directly control. Think of it as burning fuel yourself.</p>
+                        <ul class="mt-4 text-left list-disc list-inside text-gray-500">
+                            <li>Fuel for your personal car</li>
+                            <li>Natural gas for your boiler</li>
+                        </ul>
+                    </div>
+                    <div class="stat-card text-center border-t-4 border-[#0EA5E9]">
+                        <div class="text-4xl mb-4">⚡️</div>
+                        <h3 class="text-xl font-bold text-[#075985] mb-2">Scope 2: Indirect Energy Emissions</h3>
+                        <p class="text-gray-600">Emissions from the electricity you buy and use. The power was generated elsewhere, but it's for you.</p>
+                        <ul class="mt-4 text-left list-disc list-inside text-gray-500">
+                            <li>Household electricity use</li>
+                            <li>Charging your electric vehicle</li>
+                        </ul>
+                    </div>
+                    <div class="stat-card text-center border-t-4 border-[#0284C7]">
+                        <div class="text-4xl mb-4">🌍</div>
+                        <h3 class="text-xl font-bold text-[#075985] mb-2">Scope 3: Other Indirect Emissions</h3>
+                        <p class="text-gray-600">All other emissions from your activities, from the products you buy to the waste you create.</p>
+                        <ul class="mt-4 text-left list-disc list-inside text-gray-500">
+                            <li>Flights and public transport</li>
+                            <li>Waste disposal & water usage</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transportation Comparison Section -->
+            <section class="mb-20 stat-card">
+                <h3 class="text-lg font-semibold text-[#075985] mb-1 text-center">How You Travel Matters</h3>
+                <p class="section-subheading mb-8 text-center">Personal transportation is a major contributor to an individual's carbon footprint. This chart compares the emissions per kilometer for various common modes of transport in the UK, showing the clear benefit of public and electric options.</p>
+                <div class="chart-container h-[500px] max-h-[600px]">
+                    <canvas id="transportChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Air Travel & Waste Disposal Comparison Section -->
+            <section class="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="stat-card">
+                    <h3 class="text-lg font-semibold text-[#075985] mb-1 text-center">The Impact of Air Travel</h3>
+                    <p class="section-subheading mb-8 text-center">Flying is highly carbon-intensive. The class you fly makes a huge difference due to space allocation. A long-haul first-class seat can have a footprint nearly four times that of an economy seat.</p>
+                    <div class="chart-container h-[300px] md:h-[350px]">
+                        <canvas id="airTravelChart"></canvas>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3 class="text-lg font-semibold text-[#075985] mb-1 text-center">Waste Not, Emit Less</h3>
+                    <p class="section-subheading mb-8 text-center">How you dispose of waste has a dramatic impact on emissions. Landfilling organic waste produces methane, a potent greenhouse gas, making it vastly more harmful than composting.</p>
+                    <div class="chart-container h-[300px] md:h-[350px]">
+                        <canvas id="wasteChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Material Use Section -->
+            <section class="mb-20 stat-card">
+                <h3 class="text-lg font-semibold text-[#075985] mb-1 text-center">The Power of Recycling</h3>
+                <p class="section-subheading mb-8 text-center">The products we buy have a "hidden" carbon footprint from their production. Choosing products made from recycled materials significantly reduces these upstream emissions. For example, producing steel cans from recycled sources cuts emissions by over 36%.</p>
+                <div class="chart-container h-[400px]">
+                    <canvas id="materialUseChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Solutions Flowchart Section -->
+            <section>
+                <h3 class="text-lg font-semibold text-[#075985] mb-1 text-center">Pathways to a Lower Footprint</h3>
+                <p class="section-subheading mb-12 text-center">Reducing your carbon footprint involves making conscious choices across all aspects of your life. Follow these key strategies outlined in the report to make a meaningful difference.</p>
+                <div class="flex flex-col items-center">
+                    <div class="p-4 bg-[#0EA5E9] text-white font-bold rounded-lg shadow-lg">START HERE: Your Choices</div>
+                    <div class="h-12 w-1 bg-[#0EA5E9]"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+                        <!-- Home Column -->
+                        <div class="flex flex-col items-center">
+                            <div class="text-4xl mb-4">🏠</div>
+                            <h3 class="text-xl font-bold text-center text-[#075985] mb-2">In Your Home</h3>
+                            <div class="h-8 w-1 bg-[#38BDF8]"></div>
+                            <div class="w-full space-y-4">
+                                <div class="stat-card w-full text-center border-l-4 border-[#38BDF8]">Improve Insulation</div>
+                                 <div class="h-4 w-1 bg-[#38BDF8] mx-auto"></div>
+                                <div class="stat-card w-full text-center border-l-4 border-[#38BDF8]">Switch to a Green Energy Tariff</div>
+                                 <div class="h-4 w-1 bg-[#38BDF8] mx-auto"></div>
+                                <div class="stat-card w-full text-center border-l-4 border-[#38BDF8]">Adopt Energy-Efficient Appliances</div>
+                            </div>
+                        </div>
+                        <!-- Transport Column -->
+                        <div class="flex flex-col items-center">
+                            <div class="text-4xl mb-4">🚆</div>
+                            <h3 class="text-xl font-bold text-center text-[#075985] mb-2">On The Move</h3>
+                            <div class="h-8 w-1 bg-[#0EA5E9]"></div>
+                            <div class="w-full space-y-4">
+                                <div class="stat-card w-full text-center border-l-4 border-[#0EA5E9]">Prioritize Public Transport</div>
+                                 <div class="h-4 w-1 bg-[#0EA5E9] mx-auto"></div>
+                                <div class="stat-card w-full text-center border-l-4 border-[#0EA5E9]">Transition to an Electric Vehicle</div>
+                                 <div class="h-4 w-1 bg-[#0EA5E9] mx-auto"></div>
+                                <div class="stat-card w-full text-center border-l-4 border-[#0EA5E9]">Reduce Air Travel Frequency</div>
+                            </div>
+                        </div>
+                        <!-- Consumption Column -->
+                        <div class="flex flex-col items-center">
+                            <div class="text-4xl mb-4">♻️</div>
+                            <h3 class="text-xl font-bold text-center text-[#075985] mb-2">Your Consumption</h3>
+                             <div class="h-8 w-1 bg-[#0284C7]"></div>
+                            <div class="w-full space-y-4">
+                                <div class="stat-card w-full text-center border-l-4 border-[#0284C7]">Reduce, Reuse, Recycle</div>
+                                 <div class="h-4 w-1 bg-[#0284C7] mx-auto"></div>
+                                <div class="stat-card w-full text-center border-l-4 border-[#0284C7]">Compost Organic Waste</div>
+                                 <div class="h-4 w-1 bg-[#0284C7] mx-auto"></div>
+                                <div class="stat-card w-full text-center border-l-4 border-[#0284C7]">Reduce Water Consumption</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <h2 class="text-3xl font-bold mb-6 text-[#023E8A]">Welcome Back!</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" class="login-input" required>
+                <input type="password" id="password" placeholder="Password" class="login-input" required>
+                <button type="submit" class="login-button">Login</button>
+                <p id="loginError" class="error-message hidden">Invalid username or password.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Carbon Footprint Calculator Application -->
+    <div id="mainApp" style="display: none;">
+        <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="text-xl font-bold text-[#023E8A]">
+                    <span>🌿</span> Carbon Analyzer and Reporter
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#calculator" class="text-gray-600 hover:text-[#0077B6] font-medium">Calculator</a>
+                    <a href="#dashboard" class="text-gray-600 hover:text-[#0077B6] font-medium">Dashboard</a>
+                    <a href="#hotspots" class="text-gray-600 hover:text-[#0077B6] font-medium">Hotspots</a>
+                    <a href="#solutions" class="text-gray-600 hover:text-[#0077B6] font-medium">Solutions</a>
+                    <!-- Changed from button to anchor tag and styled like other nav links -->
+                    <a href="#" id="viewReportLink" class="text-gray-600 hover:text-[#0077B6] font-medium">
+                        View Full Report
+                    </a>
+                    <!-- Changed from button to anchor tag and styled like other nav links -->
+                    <a href="#" id="logoutLink" class="text-gray-600 hover:text-[#0077B6] font-medium">
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+    <main>
+        <section id="hero" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-[#023E8A] leading-tight">Understand Your Carbon Footprint.</h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Discover the environmental impact of your daily choices with this interactive guide, based on the official 2025 UK Government Greenhouse Gas (GHG) Conversion Factors. Calculate, compare, and learn how to make a difference.</p>
+                <a href="#calculator" class="mt-8 inline-block btn btn-primary text-lg">Start Calculating
+                    <span>&rarr;</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="calculator" class="py-20">
+             <div class="container mx-auto px-6">
+                <h2 class="section-title">Your Personal Footprint Calculator</h2>
+                <p class="section-subtitle">Enter your typical weekly activities to estimate your carbon footprint. The initial values are based on UK averages to get you started. Your results will update automatically on the dashboard below.</p>
+                
+                <form id="footprintForm" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center"><span class="text-3xl mr-3">🏠</span> Home Energy</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="electricity" class="block text-sm font-medium text-gray-700">Weekly Electricity Use (kWh)</label>
+                                <input type="number" id="electricity" value="55" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="heating" class="block text-sm font-medium text-gray-700">Primary Heating Fuel</label>
+                                <select id="heating" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                    <option value="gas">Natural Gas</option>
+                                    <option value="lpg">LPG</option>
+                                    <option value="none">Electric/Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="heatingKwh" class="block text-sm font-medium text-gray-700">Weekly Heating Fuel Use (kWh)</label>
+                                <input type="number" id="heatingKwh" value="250" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center"><span class="text-3xl mr-3">🚗</span> Transport</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="carType" class="block text-sm font-medium text-gray-700">Primary Car Type</label>
+                                <select id="carType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                    <option value="none">No Car</option>
+                                    <option value="petrol_supermini">Petrol - Supermini</option>
+                                    <option value="diesel_supermini" selected>Diesel - Supermini</option>
+                                    <option value="phev_supermini">PHEV - Supermini</option>
+                                    <option value="bev_supermini">BEV - Supermini</option>
+                                    <option value="petrol_luxury">Petrol - Luxury</option>
+                                    <option value="diesel_luxury">Diesel - Luxury</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="mileage" class="block text-sm font-medium text-gray-700">Weekly Car Mileage (km)</label>
+                                <input type="number" id="mileage" value="200" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="bus" class="block text-sm font-medium text-gray-700">Weekly Bus Travel (km)</label>
+                                <input type="number" id="bus" value="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                             <div>
+                                <label for="rail" class="block text-sm font-medium text-gray-700">Weekly National Rail Travel (km)</label>
+                                <input type="number" id="rail" value="50" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center"><span class="text-3xl mr-3">♻️</span> Consumption & Lifestyle</h3>
+                        <div class="space-y-4">
+                           <div>
+                                <label for="waste" class="block text-sm font-medium text-gray-700">Weekly General Waste to Landfill (kg)</label>
+                                <input type="number" id="waste" value="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="recycling" class="block text-sm font-medium text-gray-700">Weekly Waste Recycled/Composted (kg)</label>
+                                <input type="number" id="recycling" value="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="shortHaul" class="block text-sm font-medium text-gray-700">Short-haul return flights per year</label>
+                                <input type="number" id="shortHaul" value="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="longHaul" class="block text-sm font-medium text-gray-700">Long-haul return flights per year</label>
+                                <input type="number" id="longHaul" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
+        <section id="dashboard" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                   <h2 class="section-title">Your Impact Dashboard</h2>
+                <p class="section-subtitle">This dashboard visualizes your estimated carbon footprint based on your inputs above. See where your biggest impacts lie and compare your choices against lower-carbon alternatives.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
+                    <div class="card text-center md:col-span-2 lg:col-span-1">
+                        <h3 class="text-2xl font-bold mb-2">Total Weekly Footprint</h3>
+                        <p class="result-value" id="totalFootprint">0.00</p>
+                        <p class="text-gray-600 font-medium">kg CO₂e</p>
+                        <p class="text-sm text-gray-500 mt-4">This is your estimated weekly total. The charts show how it's broken down.</p>
+                    </div>
+
+                    <div class="card md:col-span-2">
+                        <h3 class="text-2xl font-bold mb-4 text-center">Emissions Breakdown by Category</h3>
+                        <div class="chart-container mx-auto">
+                            <canvas id="footprintPieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card col-span-1 md:col-span-2 lg:col-span-3">
+                           <h3 class="text-2xl font-bold mb-4 text-center" id="dynamicComparisonChartTitle"></h3>
+                           <p class="text-gray-600 text-center max-w-2xl mx-auto mb-6" id="dynamicComparisonChartSubtitle"></p>
+                         <div class="chart-container mx-auto h-96 md:h-[400px]">
+                               <canvas id="transportBarChart"></canvas>
+                           </div>
+                       </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hotspots" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Emission Hotspots</h2>
+                <p class="section-subtitle">Certain activities have a disproportionately high carbon footprint. Understanding these "hotspots," based on the emission data, is key to making impactful changes.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-2">✈️ Air Travel</h3>
+                        <p class="text-gray-600">Flying, especially long-haul in premium classes, is one of the most carbon-intensive activities per hour. A single long-haul flight can constitute a significant portion of an individual's annual footprint.</p>
+                        <div class="mt-4 bg-blue-50 p-4 rounded-lg">
+                            <p class="font-bold text-blue-800">Long-haul (First Class): <span class="float-right">~0.47 kg CO₂e/km</span></p>
+                            <p class="font-bold text-blue-800">Long-haul (Economy): <span class="float-right">~0.12 kg CO₂e/km</span></p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-2">🚗 Driving Petrol/Diesel Cars</h3>
+                        <p class="text-gray-600">Driving cars powered by fossil fuels is a major source of direct (Scope 1) emissions. Larger, less efficient cars have a significantly higher impact per kilometer than smaller or electric alternatives.</p>
+                           <div class="mt-4 bg-green-50 p-4 rounded-lg">
+                               <p class="font-bold text-green-800">Petrol Car (Luxury): <span class="float-right">~0.31 kg CO₂e/km</span></p>
+                               <p class="font-bold text-green-800">EV (Supermini): <span class="float-right">~0.04 kg CO₂e/km</span></p>
+                           </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-2">🗑️ Waste to Landfill</h3>
+                        <p class="text-gray-600">Organic waste (like food) in landfills decomposes and releases methane, a potent greenhouse gas. Composting or anaerobic digestion is a much lower-carbon alternative for waste disposal.</p>
+                        <div class="mt-4 bg-yellow-50 p-4 rounded-lg">
+                            <p class="font-bold text-yellow-800">Food Waste (Landfill): <span class="float-right">~700 kg CO₂e/tonne</span></p>
+                            <p class="font-bold text-yellow-800">Food Waste (Composted): <span class="float-right">~9 kg CO₂e/tonne</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Actionable Solutions for a Lower Footprint</h2>
+                <p class="section-subtitle">Reducing your carbon footprint is a journey of small, consistent changes. Here are some effective strategies, drawn from the report, to help you make a positive impact.</p>
+                <div id="accordion" class="max-w-4xl mx-auto rounded-lg overflow-hidden border border-gray-200">
+                    <div>
+                        <button class="accordion-button">
+                            <span>💡 In Your Home</span>
+                            <span class="accordion-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <ul class="p-6 space-y-3 list-disc list-inside text-gray-700">
+                                <li><strong>Improve Insulation:</strong> Reduce heat loss by insulating lofts, walls, and floors.</li>
+                                <li><strong>Switch to a Green Tariff:</strong> Choose an electricity supplier that provides 100% renewable energy.</li>
+                                <li><strong>Upgrade Appliances:</b> Opt for A-rated or higher appliances to reduce electricity consumption.</li>
+                                 <li><strong>Smart Heating:</strong> Use smart thermostats to optimize heating and avoid waste.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="accordion-button">
+                            <span>🚆 On The Move</span>
+                            <span class="accordion-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <ul class="p-6 space-y-3 list-disc list-inside text-gray-700">
+                               <li><strong>Prioritize Public Transport:</strong> Rail and bus travel have significantly lower per-passenger emissions than cars.</li>
+                               <li><strong>Embrace Active Travel:</strong> Walk or cycle for short journeys to eliminate emissions entirely.</li>
+                               <li><strong>Consider an EV:</strong> If a car is necessary, transitioning to an Electric Vehicle drastically cuts direct emissions.</li>
+                               <li><strong>Fly Less & Smarter:</strong> Reduce air travel frequency, especially long-haul, and choose economy class.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="accordion-button">
+                            <span>🛍️ Your Consumption Habits</span>
+                            <span class="accordion-icon text-2xl font-light">+</span>
+                        </button>
+                        <div class="accordion-content">
+                            <ul class="p-6 space-y-3 list-disc list-inside text-gray-700">
+                                <li><strong>Reduce, Reuse, Recycle:</strong> Minimize consumption, extend the life of products, and recycle what you can't reuse.</li>
+                                <li><strong>Compost Food Waste:</strong> Divert organic waste from landfills to dramatically cut methane emissions.</li>
+                                <li><strong>Eat Mindfully:</strong> Reducing consumption of high-carbon foods like red meat can lower your dietary footprint.</li>
+                                <li><strong>Conserve Water:</strong> Reducing water use saves the energy required for its supply and treatment.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Carbon Analyzer and Reporter. All calculations are estimates.</p>
+            <p class="text-sm text-gray-400 mt-2">Data based on the Department for Energy Security and Net Zero's "Greenhouse gas reporting: conversion factors 2025".</p>
+        </div>
+    </footer>
+</div> <!-- End of mainApp div -->
+
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

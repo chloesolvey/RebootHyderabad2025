@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+    environment {
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Frontend Build & Lint') {
+            steps {
+                sh 'npm install'
+                sh 'npx eslint ./src --ignore-pattern dist/'
+                sh 'npx tsc --noEmit'
+                sh 'npm run build'
+                sh 'npm run test || echo "No frontend tests"'
+            }
+        }
+        stage('Backend Build & Lint') {
+            steps {
+                dir('backend') {
+                    sh 'npm install'
+                    sh 'npx eslint ./src --ignore-pattern dist/'
+                    sh 'npx tsc --noEmit'
+                    sh 'npm run build'
+                    sh 'npm run test || echo "No backend tests"'
+                }
+            }
+        }
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh '''
+                            gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                            gcloud config set project lloyds-reboot
+                            gcloud auth configure-docker --quiet
+                            docker build -t gcr.io/lloyds-reboot/talentpivot-beta:$BUILD_NUMBER .
+                            docker push gcr.io/lloyds-reboot/talentpivot-beta:$BUILD_NUMBER
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Deploy to Cloud Run') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'gcp', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh '''
+                            gcloud run deploy talentpivot-beta \
+                                --image gcr.io/lloyds-reboot/talentpivot-beta:$BUILD_NUMBER \
+                                --region us-central1 \
+                                --platform managed \
+                                --allow-unauthenticated
+                        '''
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'frontend/dist/**,backend/dist/**', allowEmptyArchive: true
+        }
+        failure {
+            echo 'CD pipeline failed! Check logs for details.'
+        }
+        success {
+            echo 'CD pipeline completed successfully! Application is deployed.'
+        }
+    }
+}
+

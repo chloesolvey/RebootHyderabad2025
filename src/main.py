@@ -6,9 +6,11 @@ import logging
 from recommendation.file_utils import read_sql_file, classify_sql_statements
 from recommendation.analysis_utils import analyze_sql, estimate_carbon_emission, generate_record_hash
 from recommendation.bigquery_utils import run_dry_run, create_bq_table_if_not_exists, load_dataframe_to_bq_upsert
+from alerts import alerting_logic
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 def process_sql_directory(sql_dir="sql"):
     """
@@ -66,6 +68,7 @@ def main():
 
     create_bq_table_if_not_exists(dataset, table)
     load_dataframe_to_bq_upsert(df, dataset, table)
+    alerting_logic.main()  # Or the specific function you wish to execute
     logger.info(f"Successfully loaded {len(df)} records to {dataset}.{table}")
 
 if __name__ == "__main__":

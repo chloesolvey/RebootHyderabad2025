@@ -8,7 +8,7 @@ from recommendation.analysis_utils import analyze_sql, estimate_carbon_emission,
 from recommendation.bigquery_utils import run_dry_run, create_bq_table_if_not_exists, load_dataframe_to_bq_upsert
 
 # ---- CONFIG: set your webhook ----
-SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
 COVERAGE_THRESHOLD = 80
 
 # Patterns that trigger alert

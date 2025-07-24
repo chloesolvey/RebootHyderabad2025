@@ -1,0 +1,102 @@
+spring:
+  application:
+    name: customer-onboarding
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nikilesh.nikil333@gmail.com
+#    username: smartcoders.ltc@gmail.com
+#    password: ksdwruwfpnbnrrkj
+    password: guwdarzexekoovxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+2factor:
+  api:
+    key: f94c9c1e-653b-11f0-a562-0200cd936042
+
+otp:
+  expiry:
+    minutes: 5
+
+encryption:
+  key: 1234567890123456
+
+
+resume-journey:
+  url: "http://localhost:3000/resumeJourney?token="
+
+error-config:
+  error-details:
+    - errorCode: "1001"
+      errorMessage: "ApplicationId is not found"
+      errorType: "NotFoundError"
+      statusCode: 500
+    - errorCode: "1002"
+      errorMessage: "Server error occurred"
+      errorType: "InternalServerError"
+      statusCode: 500
+    - errorCode: "1003"
+      errorMessage: "Invalid mobile number"
+      errorType: "BadRequestError"
+      statusCode: 400
+    - errorCode: "1004"
+      errorMessage: "Invalid mode of notification selected"
+      errorType: "ValidationError"
+      statusCode: 500
+    - errorCode: "1005"
+      errorMessage: "Invalid credentials"
+      errorType: "AuthenticationError"
+      statusCode: 401
+    - errorCode: "1006"
+      errorMessage: "DocumentId is not found"
+      errorType: "NotFoundError"
+      statusCode: 500
+    - errorCode: "1007"
+      errorMessage: "OTP is not found"
+      errorType: "NotFoundError"
+      statusCode: 500
+    - errorCode: "1008"
+      errorMessage: "OTP is not sent via sms"
+      errorType: "ServiceUnavailableError"
+      statusCode: 500
+    - errorCode: "1009"
+      errorMessage: "OTP is not sent via email"
+      errorType: "ServiceUnavailableError"
+      statusCode: 500
+    - errorCode: "1010"
+      errorMessage: "Resume link not sent via email"
+      errorType: "ServiceUnavailableError"
+      statusCode: 500
+    - errorCode: "1011"
+      errorMessage: "Error in encryption of applicationId"
+      errorType: "InternalServerError"
+      statusCode: 500
+    - errorCode: "1012"
+      errorMessage: "Error in decryption of applicationId"
+      errorType: "InternalServerError"
+      statusCode: 500

@@ -1,41 +1,78 @@
-# Reboot Hyderabad Hackathon
+# GreenQuery – Sustainable BigQuery Optimization
 
-This is the repository for the Reboot Hackathon being held in Hyderabad.
+This project analyzes BigQuery SQL queries placed in the `/sql/` directory, performs dry runs to estimate cost and data processed, and pushes recommendations to a BigQuery table. It is containerized using Docker and deployed as a Cloud Run Job on Google Cloud Platform (GCP).
 
-## Fork this Repository
+---
 
-To track each team's code repositories, any team member who's responsible for building a component must fork this repository so that it can be incorporated into the judging criteria when selecting the winners.
+## 📁 Project Structure
 
-To fork this repository, select the `Fork` dropdown menu next to the title:
+greenquery/
+│
+├── recommendation/
+│ └── [python modules and logic]
+│
+├── sql/
+│ └── [Place your test SQL queries here]
+│
+├── Dockerfile
+├── requirements.txt
+└── main.py
 
-Then select `+ Create New Fork`:
 
-For the `Repository name`, please make sure you enter your team's name so that we can keep track of the different repositories.
+---
 
-If your team is building multiple components and requires multiple repositories, fork this repository and enter the team name followed by the name of the component.
+## 🧾 Usage Instructions
 
-For example, if you have a `frontend` and `backend` application, the first fork can be called `TeamName-frontend` and the second fork can be called `TeamName-backend`.
+     1️⃣ Add Your SQL Queries
 
-> [!NOTE]
-> If you're only building a single component, you can leave the `Repository name` as `TeamName`.
+    - Place your SQL queries (only `.sql` files) in the `/sql/` directory.
+    - These queries will be picked up by the application for dry run analysis and recommendation generation.
+    - Push your changes to the main Git repository.
 
-Once you've entered the name, select `Create fork`:
 
-### Add Collaborators
+     2️⃣ Build and Deploy the Cloud Run Job
 
-Now that you've created your own fork, if another member within your team wants to contribute to the code, you would need to add them as a collaborator.
+        From the root of the repository, run the following commands in your terminal (e.g., VSCode terminal):
 
-To do so, navigate to the repository containing your fork and click on `Settings`:
+         🔧 Build and Push Docker Image
 
-Then select the `Collaborators` option in the navigation menu on the left:
+        -> gcloud builds submit --tag gcr.io/ltc-reboot25-team-58/greenquery
 
-Select `Add people`:
+        🚀 Deploy Cloud Run Job (one-time setup)
 
-And search for the `username`, `full name`, or `email` of the member you want to add to the repository.
+         ->  gcloud beta run jobs deploy reboot-repo-job \
+            --image gcr.io/ltc-reboot25-team-58/greenquery \
+            --region europe-west2 \
+            --memory 1Gi \
+            --cpu 1 \
+            --max-retries 1 \
+            --timeout 900s \
+            --project ltc-reboot25-team-58
 
-Then they can clone your repository and contribute code to your fork.
+        ▶️ Run the Job
+        -> gcloud beta run jobs execute reboot-repo-job \
+            --region europe-west2 \
+            --project ltc-reboot25-team-58
 
-> [!NOTE]
-> Please make sure to add them to your forked version of the repository. You won't be able to add them here directly.
+    3️⃣ ✅ Verify Job Status
+        You can monitor execution logs and job status at the following Cloud Console link:
 
-Now you're ready to start. Happy coding!
+        👉 Cloud Run Job Dashboard: https://console.cloud.google.com/run/jobs/details/europe-west2/reboot-repo-job/executions?authuser=0&inv=1&invt=Ab3mVg&project=ltc-reboot25-team-58
+
+        ✅ Job Configuration
+        Job Name: reboot-repo-job
+        Region: europe-west2
+        Service Account: Must have permissions for BigQuery access
+        🐍 Python Version - This project uses Python 3.11
+
+        📦 Dependencies
+        Install locally (for development/testing):
+        -> pip install -r requirements.txt
+
+
+📬 Contact
+
+---
+
+Let us know if you'd like a badge section (e.g., Python version, GCP deploy, etc.) or want to include setup for automated GitHub Actions later.
+<Engineers Email id>

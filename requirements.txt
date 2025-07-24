@@ -1,0 +1,7 @@
+pandas
+google-cloud-bigquery
+requests
+moz-sql-parser
+requests
+pyarrow
+pandas_gbq

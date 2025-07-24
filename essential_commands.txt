@@ -1,0 +1,116 @@
+-- from root
+python3 -m src.main
+python3 -m unittest discover -s tests
+
+python3 -m unittest tests.tests_file_utils 
+python3 -m unittest tests.tests_bigquery_utils
+python3 -m unittest tests.tests_analysis_utils
+
+python3 -m alerts.alerting_logic 
+
+docker build -t 404dnf_logic .
+docker run --rm 404dnf_logic
+
+docker run \
+  -v $(pwd)/sql:/app/sql \
+  -v $(pwd)/service_accounts/ltc-reboot.json:/tmp/ltc-reboot.json:ro \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json \
+  404dnf_logic
+
+docker run --rm -v $(pwd)/service_accounts/ltc-reboot.json:/tmp/ltc-reboot.json:ro \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json \
+  404dnf_logic python3 -m unittest tests.tests_file_utils
+
+docker run --rm -v $(pwd)/service_accounts/ltc-reboot.json:/tmp/ltc-reboot.json:ro \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json \
+  404dnf_logic python3 -m unittest tests.tests_bigquery_utils
+
+docker run --rm -v $(pwd)/service_accounts/ltc-reboot.json:/tmp/ltc-reboot.json:ro \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json \
+  404dnf_logic python3 -m unittest tests.tests_analysis_utils
+
+
+
+gcloud artifacts repositories create dnf-repo \
+  --repository-format=docker \
+  --location=europe-west2
+
+docker build --platform=linux/amd64 -t europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest .
+docker build --platform=linux/amd64 -t europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest .
+
+docker run -v $(pwd)/service_accounts/ltc-reboot.json:/tmp/ltc-reboot.json:ro -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json -p 8080:8080 404dnf_logic
+
+
+docker push europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest
+
+
+
+docker tag 404dnf_logic europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest
+
+gcloud auth configure-docker europe-west2-docker.pkg.dev
+
+docker push europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest
+
+gcloud run deploy dnf-service \
+  --image=europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest \
+  --platform=managed \
+  --region=europe-west2 \
+  --allow-unauthenticated
+
+
+docker run \
+  -v $(pwd)/service_accounts/ltc-reboot.json:/tmp/ltc-reboot.json:ro \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json \
+  -p 8080:8080 \
+  404dnf_logic
+
+
+
+
+gcloud run jobs create dnf-job-new \
+  --image europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest \
+  --region europe-west2 \
+  --set-env-vars GOOGLE_APPLICATION_CREDENTIALS=/tmp/ltc-reboot.json
+
+gcloud run jobs update dnf-job \
+  --image=europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest \
+  --region=europe-west2
+
+
+gcloud run jobs execute dnf-job
+
+gcloud run jobs update dnf-job \
+  --region europe-west2 \
+  --service-account reboot-dnf@ltc-reboot25-team-58.iam.gserviceaccount.com
+
+
+
+# Grant Cloud Run Admin role (for deployment)
+gcloud projects add-iam-policy-binding ltc-reboot25-team-58 \
+  --member="user:ltc-reboot25-287@green-tartan1.workshop.ongcp.co" \
+  --role="roles/run.admin"
+
+# Grant Service Account User role (to allow acting as a service account)
+gcloud iam service-accounts add-iam-policy-binding \
+  reboot-dnf@ltc-reboot25-team-58.iam.gserviceaccount.com \
+  --member="user:ltc-reboot25-287@green-tartan1.workshop.ongcp.co" \
+  --role="roles/iam.serviceAccountUser"
+
+
+gcloud auth activate-service-account ltc-reboot25-287@green-tartan1.workshop.ongcp.co --key-file=/Users/work/Documents/git/reboot_repo/service_accounts/ltc-reboot.json --project=ltc-reboot25-team-58
+
+
+docker exec -it 0bca30ac66df ls /tmp
+
+
+docker run -it 404dnf_logic /bin/bash
+
+
+
+gcloud run jobs create reboot-repo-job \
+  --image europe-west2-docker.pkg.dev/ltc-reboot25-team-58/dnf-repo/404dnf_logic:latest \
+  --region europe-west2 \
+  --project ltc-reboot25-team-58
+
+
+gcloud run jobs execute reboot-repo-job --region europe-west2
